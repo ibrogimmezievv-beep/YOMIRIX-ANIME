@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  @apply transition-colors duration-200;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-brand-900 text-brand-100;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-brand-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-brand-600 rounded hover:bg-brand-500;
+}
+
+/* Focus visible */
+:focus-visible {
+  @apply outline-none ring-2 ring-brand-accent ring-offset-2 ring-offset-brand-900;
+}
+
+/* Images */
+img {
+  @apply select-none;
+}

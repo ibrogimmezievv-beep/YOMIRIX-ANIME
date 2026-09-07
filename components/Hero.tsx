@@ -14,7 +14,7 @@ interface HeroProps {
 
 export function Hero({ anime }: HeroProps) {
   return (
-    <div className="relative -mx-4 -mt-4 mb-12 overflow-hidden">
+    <div className="relative -mx-4 -mt-8 mb-12 overflow-hidden rounded-b-lg">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -37,11 +37,11 @@ export function Hero({ anime }: HeroProps) {
             <Badge variant="accent">{anime.year}</Badge>
             <Badge
               variant="accent"
-              className={${
+              className={`${
                 anime.status === 'completed' ? 'bg-green-500/20 text-green-400' :
                 anime.status === 'ongoing' ? 'bg-blue-500/20 text-blue-400' :
                 'bg-brand-accent/20 text-brand-accent'
-              }}
+              }`}
             >
               {anime.status.charAt(0).toUpperCase() + anime.status.slice(1)}
             </Badge>

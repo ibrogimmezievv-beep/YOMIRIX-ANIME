@@ -37,7 +37,7 @@ export default function AnimePage({ params }: AnimePageProps) {
   return (
     <div className="space-y-12">
       {/* Hero Section */}
-      <div className="relative -mx-4 -mt-8 mb-12 overflow-hidden rounded-lg">
+      <div className="relative -mx-4 -mt-8 mb-12 overflow-hidden rounded-b-lg">
         <div className="absolute inset-0 z-0">
           <Image
             src={anime.banner}

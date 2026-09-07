@@ -2,54 +2,32 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { getAnimeBySlug, animeDatabase } from '@/lib/anime-data';
-import { VideoPlayer } from '@/components/VideoPlayer';
+import { getAnimeBySlug } from '@/lib/anime-data';
 import { Button } from '@/components/ui/Button';
 import { EmptyState } from '@/components/ui/EmptyState';
-import { EpisodeList } from '@/components/EpisodeList';
-import { CommentList } from '@/components/CommentList';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 
 const mockEpisodes = [
   {
     id: '1',
     number: 1,
-    title: 'The Jujutsu High',
-    description: 'Yuji encounters a cursed finger and swallows it, becoming the vessel of Sukuna.',
+    title: 'The Beginning',
+    description: 'The story begins...',
     duration: 24,
   },
   {
     id: '2',
     number: 2,
-    title: 'For the Ungrateful Dead',
-    description: 'Yuji is taken to Jujutsu High school where he meets Megumi and Nobara.',
+    title: 'Rising Action',
+    description: 'Things get interesting...',
     duration: 24,
   },
   {
     id: '3',
     number: 3,
-    title: 'Girl of my Dreams',
-    description: 'The trio goes on their first mission together.',
+    title: 'Climax',
+    description: 'The turning point...',
     duration: 24,
-  },
-];
-
-const mockComments = [
-  {
-    id: '1',
-    avatar: 'https://images.unsplash.com/photo-1535713806e5c96f6a66b2a9e80b5fc56b6c5b5c?w=40&h=40&fit=crop',
-    username: 'AnimeWatcher',
-    date: '2 days ago',
-    text: 'This anime is absolutely incredible! The animation quality is top-notch.',
-    likes: 234,
-  },
-  {
-    id: '2',
-    avatar: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=40&h=40&fit=crop',
-    username: 'MangaFan',
-    date: '1 day ago',
-    text: 'Can\'t wait for the next season! This episode was amazing.',
-    likes: 156,
   },
 ];
 
@@ -68,8 +46,6 @@ export default function WatchPage({ params, searchParams }: WatchPageProps) {
   const currentEpisode = mockEpisodes.find(
     (e) => e.number === currentEpisodeNumber
   ) || mockEpisodes[0];
-
-  const [watchedEpisodes, setWatchedEpisodes] = useState<string[]>([]);
 
   if (!anime) {
     return (
@@ -97,10 +73,15 @@ export default function WatchPage({ params, searchParams }: WatchPageProps) {
   return (
     <div className="space-y-8">
       {/* Video Player */}
-      <VideoPlayer
-        title={anime.title}
-        episodeNumber={currentEpisode.number}
-      />
+      <div className="bg-black rounded-lg overflow-hidden aspect-video flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-6xl mb-4">▶</div>
+          <p className="text-brand-300">
+            {anime.title} - Episode {currentEpisode.number}
+          </p>
+          <p className="text-brand-500 text-sm mt-2">Video player placeholder</p>
+        </div>
+      </div>
 
       {/* Info */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -131,7 +112,7 @@ export default function WatchPage({ params, searchParams }: WatchPageProps) {
               >
                 <Button variant="secondary" className="flex items-center gap-2">
                   <ChevronLeft className="w-4 h-4" />
-                  Previous Episode
+                  Previous
                 </Button>
               </Link>
             )}
@@ -140,36 +121,35 @@ export default function WatchPage({ params, searchParams }: WatchPageProps) {
                 href={`/watch/${anime.slug}?ep=${nextEpisode.number}`}
               >
                 <Button className="flex items-center gap-2">
-                  Next Episode
+                  Next
                   <ChevronRight className="w-4 h-4" />
                 </Button>
               </Link>
             )}
           </div>
-
-          {/* Comments */}
-          <div>
-            <h3 className="text-lg font-semibold text-brand-100 mb-4">
-              Comments
-            </h3>
-            <CommentList comments={mockComments} />
-          </div>
         </div>
 
-        {/* Sidebar - Episode List */}
+        {/* Episodes Sidebar */}
         <div className="md:col-span-1">
           <h3 className="text-lg font-semibold text-brand-100 mb-4">
             Episodes
           </h3>
-          <EpisodeList
-            episodes={mockEpisodes}
-            onEpisodeClick={(episode) => {
-              if (!watchedEpisodes.includes(episode.id)) {
-                setWatchedEpisodes([...watchedEpisodes, episode.id]);
-              }
-            }}
-            watched={watchedEpisodes}
-          />
+          <div className="space-y-2">
+            {mockEpisodes.map((ep) => (
+              <Link key={ep.id} href={`/watch/${anime.slug}?ep=${ep.number}`}>
+                <div
+                  className={`p-3 rounded-lg cursor-pointer transition-all ${
+                    ep.number === currentEpisode.number
+                      ? 'bg-brand-accent text-brand-900'
+                      : 'bg-brand-800 text-brand-100 hover:bg-brand-700'
+                  }`}
+                >
+                  <p className="font-medium">Episode {ep.number}</p>
+                  <p className="text-sm opacity-75">{ep.title}</p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

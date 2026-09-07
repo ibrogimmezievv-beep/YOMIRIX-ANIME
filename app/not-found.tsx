@@ -12,7 +12,7 @@ export default function NotFound() {
         <div className="text-8xl font-bold text-brand-accent">404</div>
         <h1 className="text-4xl font-bold text-brand-100">Page Not Found</h1>
         <p className="text-brand-400 text-lg max-w-md">
-          The page you're looking for doesn't exist. Please check the URL and try again.
+          The page you're looking for doesn't exist.
         </p>
         <a
           href="/"
